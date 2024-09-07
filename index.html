@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiabetiCure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/glacial-indifference-2" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Glacial Indifference', sans-serif;
+            touch-action: pan-y;
+        }
+      
+        .card-stack {
+            perspective: 1000px;
+        }
+        .card {
+            transition: all 0.3s ease;
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+        }
+        .image-left {
+            margin-left: -70px; /* Adjust this value as needed */
+        }
+        .slider-container {
+            scroll-snap-type: x mandatory;
+        }
+        .slider-card {
+            scroll-snap-align: start;
+        }
+    </style>
+    
+    <style>
+        body {
+            font-family: 'Glacial Indifference', sans-serif;
+            touch-action: pan-y;
+        }
+      
+        .card-stack {
+            perspective: 1000px;
+        }
+        .card {
+            transition: all 0.3s ease;
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+        }
+        .image-left {
+            margin-left: -70px; /* Adjust this value as needed */
+        }
+        .slider-container {
+            scroll-snap-type: x mandatory;
+        }
+        .slider-card {
+            scroll-snap-align: start;
+        }
+
+        .bg-selected {
+            background-color: #009846 !important;
+            color: white !important;
+        }
+        /* New CSS classes for text formatting */
+        .option-bold {
+            font-weight: bold;
+        }
+
+        .option-small {
+            font-size: 18px; /* Adjust size as needed */
+            font-style: italic;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        button: '#374f59',
+                        text: '#8e99a2',
+                        wwp: '#484b4e',
+                        checked: '#009846',
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class=" bg-white">
+     <!--Whatsapp logo-->
+    <a href="https://wa.me/message/DJWZOFPRPFSPK1" class="md:hidden fixed right-5 bottom-5 p-4 text-white bg-white  bg-opacity-90 rounded-full shadow-lg z-50 ">
+        <svg class="w-10 h-10" fill="#009846" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+    <nav class="flex justify-between items-center space-x-3 bg-white/60 backdrop-blur-lg sticky top-0 z-50 px-2 py-3 shadow-md md:px-20">
+        <img src="assests\img\WEBSITE_PICS-images-17-removebg-preview.png" class="h-12 md:h-20 md:pl-10"></img>
+        <button  id="startButton" class="trigger-popup md:hidden text-sm bg-button text-white px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition duration-300 text-text  md:text-2xl md:ml-40">Get your Diet plan</button>
+        <div class="md:flex flex-row gap-4 hidden">
+            <button id="infoButton1" class="trigger-popup hidden md:block bg-button text-white text-2xl font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300">Get your Diet plan now</button>
+            <a href="https://wa.me/message/DJWZOFPRPFSPK1" class="text-white">
+                <svg class="w-10 h-10" fill="#009846" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+            </a>
+        </div>
+    </nav>
+
+    <main class="relative bg-white">
+       
+        
+
+        <!--Page 1-->
+        <!--phone view-->
+        <section class=" py-8 md:hidden">
+            
+            <div id='textElem' class="relative z-10 px-4">
+                <h2 class="font-bold text-[25px] mb-2">Doctor Recommended Diabetes App</h2>
+                <h1 class="text-[30px] mb-4">Get your Diet and Fitness Plan for Diabetes</h1>
+                <div class="w-1/3 border-t-4 border-black mb-4 rounded-2xl"></div>
+                <p class="text-[21px] mb-6">95% saw Best Results in 3 weeks when followed consistently*</p>
+                <button id="infoButton1" class="trigger-popup bg-button text-white text-lg font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300">Get your Diet plan now</button>
+            </div>
+            <div class="mt-4">
+                <img src="assests\img\WEBSITE PICS (1).png" class="" >
+            </div>
+        </section>
+
+        <!--desktop view-->
+        <div class="hidden md:flex lg:flex relative mt-7 h-[680px]">
+            <div class="m-3 pl-20">
+              <h1 class="flex-1 font-bold text-6xl lg:text-6xl">Doctor Recommended Diabetes App</h1>
+              <h1 class="text-6xl my-12 lg:my-14">Get your Diet and Fitness plan <br>for Diabetes<br></h1>
+              <div class="w-1/4 border-t-8 border-black mb-6 rounded-2xl"></div>
+              <h1 class="text-4xl my-10">95% saw Best Results in 3 weeks<br> when followed consistently*<br></h1>
+              <button id="infoButton1Desk" class="trigger-popup bg-button text-white text-3xl font-bold px-8 py-4 rounded-md shadow-lg justify-center hover:shadow-xl transition duration-300">Get your Diet plan now</button>
+            </div>
+            <div class="absolute bottom-0 right-0 ">
+              <img src="assests\img\Untitled design (3).png" class="h-[700px] w-[950px]">
+            </div>
+        </div>
+        
+        <!--Page 2-->
+        <!--phone view-->
+        <section class="relative w-full overflow-hidden rounded-lg mb-6 md:hidden">
+            <div class="relative w-full">
+                <img src="assests\img\WEBSITE PICS (6).png" class="">
+            </div>
+            <h1 class="text-center text-[26px] mt-50">Diabetecure’s Way to Beat Diabetes</h1>
+            <h1 class="text-center font-bold text-xl my-5 italic">NUTRITION + FITNESS + MEDICAL RESEARCHES</h1>
+            <div class="flex flex-col ">
+                <p class="p-4 text-xl text-wrap text-center"> Our Diabetecure App is created based on the findings & guidance of ICMR <br><span class="italic">(Indian Council of Medical Research) </span>,<br>Researches, Panel of Doctors, Nutritionists & Fitness coaches.</p>
+                <button  id="infoButton2" class="trigger-popup mx-auto bg-button text-white text-lg font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300 ">Get your Diet plan now</button>
+            </div>
+            <img src="assests\img\WEBSITE PICS (5).png" class="">
+        </section>
+        <!--Desktop view-->
+        <div class="hidden md:block relative h-[650px] ">
+            <div class="absolute top-0 left-0 ">
+              <img src="assests\img\WEBSITE PICS (6).png" class="h-[350px] w-[600px]">
+            </div>
+            <div class="text-center h-full w-full pt-20">
+              <h1 class="text-5xl text-text mb-10">Diabetecure’s Way to Beat Diabetes</h1>
+              <h1 class="text-center font-bold text-4xl my-5 italic">NUTRITION + FITNESS + MEDICAL RESEARCHES</h1>
+              <p class="p-4 text-3xl text-center mb-[75px] ">
+                Our Diabetecure App is created based on<br> the findings & guidance  of ICMR <span class="italic">(Indian Council of Medical Research)</span>, <br>Researches, Panel of Doctors, Nutritionists & Fitness coaches.
+              </p>
+              <button id="infoButton2Desk" class="mx-auto trigger-popup bg-button text-white text-3xl font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300">
+                Get your Diet plan now
+              </button>
+            </div>
+            <div class="absolute bottom-5 right-0 pt">
+                <img src="assests\img\WEBSITE PICS (5).png" class="h-[350px] w-[600px]">
+            </div> 
+        </div>
+        
+        
+        <!--What we Provide both view-->
+        <section class="pt-[50px] relative bg-white my-2 md:my-0 md:pt-[40px] p-4 overflow-hidden">
+            <div class="inline-block absolute left-[-15%] top-3 bg-wwp text-white font-bold pl-[90px]  rounded-full shadow-lg py-3 pr-5 text-center italic md:hidden"><h1 class="pr-5">What We Provide?</h1></div>
+            <div class="hidden md:inline-block md:absolute md:left-[-5%] md:top-[60px] bg-wwp text-white text-3xl font-bold pl-[90px] p-10 rounded-full shadow-lg py-3 pr-5 text-center italic"><h1 class="pr-5">What We Provide?</h1></div>
+            <div class="card-stack relative h-[500px] md:h-[525px]">
+                <!--1st-->
+                <div class="card rounded-lg px-4 transform space-y-1 py-5">
+                    <img src="assests\img\WEBSITE PICS (7).png" class="ml-6 w-auto md:h-[450px] md:ml-[560px] ">
+                    <h3 class="font-semibold text-lg text-center mt-3 italic md:text-[30px] md:my-1">Task based Diet & Fitness plan will be provided</h3>
+                    <p class="text-center text-text italic font-bold md:text-[25px] md:mt-3">(Meals, Food Timing, Food Measures, Exercise)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-1 ">
+                    <img src="assests\img\WEBSITE PICS (8).png" class="h-[300px] md:h-[450px] mx-auto w-auto">
+                    <h3 class=" font-semibold text-lg  text-center italic md:text-3xl">Experience the Personalized South Indian based diet with Traditional Touch</h3>
+                    <p class="md:hidden text-center text-text italic font-bold">(Diet based on affordable Daily food & <br>Traditional method )<br></p>
+                    <p class="hidden md:block text-center text-text italic font-bold md:text-[25px]">(Diet based on affordable Daily food & Traditional method )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:mb-5">
+                    <img src="assests\img\WEBSITE PICS (9).png" class="mb-3 h-[350px] w-auto md:h-[445px] mx-auto md:mb-0">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic">No more Boring Strict Monotonous<br> Diet pattern!<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic">No more Boring Strict Monotonous Diet pattern!</h3>
+                    <p class="md:hidden text-center italic font-bold text-text mt-2">(Get a New Healthy Diet every week<br> based on Sugar Level)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text  text-[25px]">(Get a New Healthy Diet every week based on Sugar Level)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-2 md:space-y-0">
+                    <img src="assests\img\WEBSITE PICS (10).png" class="h-[350px] w-auto md:h-[445px] mx-auto">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic ">Beat Diabetes through Diabetecure’s<br> 4R Method<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic ">Beat Diabetes through Diabetecure’s 4R Method</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Regimen, Replace, Reinforce, Rebirth)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-3">
+                    <img src="assests\img\WEBSITE PICS (11).png" class="h-[350px] w-auto md:h-[440px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Track your Health Status</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Health Data Graph will be displayed <br>to track your Sugar Level)<br</p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Health Data Graph will be displayed to track your Sugar Level)</p>
+                </div>        
+                <div class="card rounded-lg p-4 transform space-y-3 md:space-y-2">
+                    <img src="assests\img\WEBSITE PICS (12).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:pt-3">We are your Healthy Notification</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Rectify your Unhealthy eating pattern<br> as we Notify)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Rectify your Unhealthy eating pattern as we Notify)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:space-y-3">
+                    <img src="assests\img\WEBSITE PICS (13).png" class="h-[350px] w-auto md:h-[430px] mx-auto md:mb-2">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Learn and Unlearn all about Diabetes through Infotainment</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Get to know Tips, Tricks, Do’s & Don’ts of Health through our Infotainment section)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (14).png" class="h-[350px] w-auto md:h-[450px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">We care for your Mental Health</h3>
+                    <p class="text-center italic font-bold mt-6 text-text md:text-[25px] md:mt-2">(Our Affirmation & Motivation posts will Strengthen you Physically & Mentally )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (15).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">Language Options</h3>
+                    <p class="md:hidden text-center italic font-bold mt-6 text-text">Now Diabetecure App is available<br> in both English & Tamil<br></p>
+                    <p class="hidden md:block text-center italic font-bold mt-6 text-text text-[25px]">Now Diabetecure App is available in both English & Tamil</p>
+                </div>
+                <!--2-->
+                <div class="card rounded-lg px-4 transform space-y-1 py-5">
+                    <img src="assests\img\WEBSITE PICS (7).png" class="ml-6 w-auto md:h-[450px] md:ml-[560px] ">
+                    <h3 class="font-semibold text-lg text-center mt-3 italic md:text-[30px] md:my-1">Task based Diet & Fitness plan will be provided</h3>
+                    <p class="text-center text-text italic font-bold md:text-[25px] md:mt-3">(Meals, Food Timing, Food Measures, Exercise)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-1 ">
+                    <img src="assests\img\WEBSITE PICS (8).png" class="h-[300px] md:h-[450px] mx-auto w-auto">
+                    <h3 class=" font-semibold text-lg  text-center italic md:text-3xl">Experience the Personalized South Indian based diet with Traditional Touch</h3>
+                    <p class="md:hidden text-center text-text italic font-bold">(Diet based on affordable Daily food & <br>Traditional method )<br></p>
+                    <p class="hidden md:block text-center text-text italic font-bold md:text-[25px]">(Diet based on affordable Daily food & Traditional method )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:mb-5">
+                    <img src="assests\img\WEBSITE PICS (9).png" class="mb-3 h-[350px] w-auto md:h-[445px] mx-auto md:mb-0">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic">No more Boring Strict Monotonous<br> Diet pattern!<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic">No more Boring Strict Monotonous Diet pattern!</h3>
+                    <p class="md:hidden text-center italic font-bold text-text mt-2">(Get a New Healthy Diet every week<br> based on Sugar Level)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text  text-[25px]">(Get a New Healthy Diet every week based on Sugar Level)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-2 md:space-y-0">
+                    <img src="assests\img\WEBSITE PICS (10).png" class="h-[350px] w-auto md:h-[445px] mx-auto">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic ">Beat Diabetes through Diabetecure’s<br> 4R Method<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic ">Beat Diabetes through Diabetecure’s 4R Method</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Regimen, Replace, Reinforce, Rebirth)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-3">
+                    <img src="assests\img\WEBSITE PICS (11).png" class="h-[350px] w-auto md:h-[440px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Track your Health Status</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Health Data Graph will be displayed <br>to track your Sugar Level)<br</p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Health Data Graph will be displayed to track your Sugar Level)</p>
+                </div>        
+                <div class="card rounded-lg p-4 transform space-y-3 md:space-y-2">
+                    <img src="assests\img\WEBSITE PICS (12).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:pt-3">We are your Healthy Notification</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Rectify your Unhealthy eating pattern<br> as we Notify)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Rectify your Unhealthy eating pattern as we Notify)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:space-y-3">
+                    <img src="assests\img\WEBSITE PICS (13).png" class="h-[350px] w-auto md:h-[430px] mx-auto md:mb-2">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Learn and Unlearn all about Diabetes through Infotainment</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Get to know Tips, Tricks, Do’s & Don’ts of Health through our Infotainment section)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (14).png" class="h-[350px] w-auto md:h-[450px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">We care for your Mental Health</h3>
+                    <p class="text-center italic font-bold mt-6 text-text md:text-[25px] md:mt-2">(Our Affirmation & Motivation posts will Strengthen you Physically & Mentally )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (15).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">Language Options</h3>
+                    <p class="md:hidden text-center italic font-bold mt-6 text-text">Now Diabetecure App is available<br> in both English & Tamil<br></p>
+                    <p class="hidden md:block text-center italic font-bold mt-6 text-text text-[25px]">Now Diabetecure App is available in both English & Tamil</p>
+                </div>
+                <!--3-->
+                <div class="card rounded-lg px-4 transform space-y-1 py-5">
+                    <img src="assests\img\WEBSITE PICS (7).png" class="ml-6 w-auto md:h-[450px] md:ml-[560px] ">
+                    <h3 class="font-semibold text-lg text-center mt-3 italic md:text-[30px] md:my-1">Task based Diet & Fitness plan will be provided</h3>
+                    <p class="text-center text-text italic font-bold md:text-[25px] md:mt-3">(Meals, Food Timing, Food Measures, Exercise)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-1 ">
+                    <img src="assests\img\WEBSITE PICS (8).png" class="h-[300px] md:h-[450px] mx-auto w-auto">
+                    <h3 class=" font-semibold text-lg  text-center italic md:text-3xl">Experience the Personalized South Indian based diet with Traditional Touch</h3>
+                    <p class="md:hidden text-center text-text italic font-bold">(Diet based on affordable Daily food & <br>Traditional method )<br></p>
+                    <p class="hidden md:block text-center text-text italic font-bold md:text-[25px]">(Diet based on affordable Daily food & Traditional method )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:mb-5">
+                    <img src="assests\img\WEBSITE PICS (9).png" class="mb-3 h-[350px] w-auto md:h-[445px] mx-auto md:mb-0">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic">No more Boring Strict Monotonous<br> Diet pattern!<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic">No more Boring Strict Monotonous Diet pattern!</h3>
+                    <p class="md:hidden text-center italic font-bold text-text mt-2">(Get a New Healthy Diet every week<br> based on Sugar Level)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text  text-[25px]">(Get a New Healthy Diet every week based on Sugar Level)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-2 md:space-y-0">
+                    <img src="assests\img\WEBSITE PICS (10).png" class="h-[350px] w-auto md:h-[445px] mx-auto">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic ">Beat Diabetes through Diabetecure’s<br> 4R Method<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic ">Beat Diabetes through Diabetecure’s 4R Method</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Regimen, Replace, Reinforce, Rebirth)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-3">
+                    <img src="assests\img\WEBSITE PICS (11).png" class="h-[350px] w-auto md:h-[440px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Track your Health Status</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Health Data Graph will be displayed <br>to track your Sugar Level)<br</p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Health Data Graph will be displayed to track your Sugar Level)</p>
+                </div>        
+                <div class="card rounded-lg p-4 transform space-y-3 md:space-y-2">
+                    <img src="assests\img\WEBSITE PICS (12).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:pt-3">We are your Healthy Notification</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Rectify your Unhealthy eating pattern<br> as we Notify)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Rectify your Unhealthy eating pattern as we Notify)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:space-y-3">
+                    <img src="assests\img\WEBSITE PICS (13).png" class="h-[350px] w-auto md:h-[430px] mx-auto md:mb-2">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Learn and Unlearn all about Diabetes through Infotainment</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Get to know Tips, Tricks, Do’s & Don’ts of Health through our Infotainment section)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (14).png" class="h-[350px] w-auto md:h-[450px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">We care for your Mental Health</h3>
+                    <p class="text-center italic font-bold mt-6 text-text md:text-[25px] md:mt-2">(Our Affirmation & Motivation posts will Strengthen you Physically & Mentally )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (15).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">Language Options</h3>
+                    <p class="md:hidden text-center italic font-bold mt-6 text-text">Now Diabetecure App is available<br> in both English & Tamil<br></p>
+                    <p class="hidden md:block text-center italic font-bold mt-6 text-text text-[25px]">Now Diabetecure App is available in both English & Tamil</p>
+                </div>
+                <!--4-->
+                <div class="card rounded-lg px-4 transform space-y-1 py-5">
+                    <img src="assests\img\WEBSITE PICS (7).png" class="ml-6 w-auto md:h-[450px] md:ml-[560px] ">
+                    <h3 class="font-semibold text-lg text-center mt-3 italic md:text-[30px] md:my-1">Task based Diet & Fitness plan will be provided</h3>
+                    <p class="text-center text-text italic font-bold md:text-[25px] md:mt-3">(Meals, Food Timing, Food Measures, Exercise)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-1 ">
+                    <img src="assests\img\WEBSITE PICS (8).png" class="h-[300px] md:h-[450px] mx-auto w-auto">
+                    <h3 class=" font-semibold text-lg  text-center italic md:text-3xl">Experience the Personalized South Indian based diet with Traditional Touch</h3>
+                    <p class="md:hidden text-center text-text italic font-bold">(Diet based on affordable Daily food & <br>Traditional method )<br></p>
+                    <p class="hidden md:block text-center text-text italic font-bold md:text-[25px]">(Diet based on affordable Daily food & Traditional method )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:mb-5">
+                    <img src="assests\img\WEBSITE PICS (9).png" class="mb-3 h-[350px] w-auto md:h-[445px] mx-auto md:mb-0">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic">No more Boring Strict Monotonous<br> Diet pattern!<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic">No more Boring Strict Monotonous Diet pattern!</h3>
+                    <p class="md:hidden text-center italic font-bold text-text mt-2">(Get a New Healthy Diet every week<br> based on Sugar Level)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text  text-[25px]">(Get a New Healthy Diet every week based on Sugar Level)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-2 md:space-y-0">
+                    <img src="assests\img\WEBSITE PICS (10).png" class="h-[350px] w-auto md:h-[445px] mx-auto">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic ">Beat Diabetes through Diabetecure’s<br> 4R Method<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic ">Beat Diabetes through Diabetecure’s 4R Method</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Regimen, Replace, Reinforce, Rebirth)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-3">
+                    <img src="assests\img\WEBSITE PICS (11).png" class="h-[350px] w-auto md:h-[440px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Track your Health Status</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Health Data Graph will be displayed <br>to track your Sugar Level)<br</p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Health Data Graph will be displayed to track your Sugar Level)</p>
+                </div>        
+                <div class="card rounded-lg p-4 transform space-y-3 md:space-y-2">
+                    <img src="assests\img\WEBSITE PICS (12).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:pt-3">We are your Healthy Notification</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Rectify your Unhealthy eating pattern<br> as we Notify)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Rectify your Unhealthy eating pattern as we Notify)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:space-y-3">
+                    <img src="assests\img\WEBSITE PICS (13).png" class="h-[350px] w-auto md:h-[430px] mx-auto md:mb-2">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Learn and Unlearn all about Diabetes through Infotainment</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Get to know Tips, Tricks, Do’s & Don’ts of Health through our Infotainment section)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (14).png" class="h-[350px] w-auto md:h-[450px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">We care for your Mental Health</h3>
+                    <p class="text-center italic font-bold mt-6 text-text md:text-[25px] md:mt-2">(Our Affirmation & Motivation posts will Strengthen you Physically & Mentally )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (15).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">Language Options</h3>
+                    <p class="md:hidden text-center italic font-bold mt-6 text-text">Now Diabetecure App is available<br> in both English & Tamil<br></p>
+                    <p class="hidden md:block text-center italic font-bold mt-6 text-text text-[25px]">Now Diabetecure App is available in both English & Tamil</p>
+                </div>
+                <!--5-->
+                <div class="card rounded-lg px-4 transform space-y-1 py-5">
+                    <img src="assests\img\WEBSITE PICS (7).png" class="ml-6 w-auto md:h-[450px] md:ml-[560px] ">
+                    <h3 class="font-semibold text-lg text-center mt-3 italic md:text-[30px] md:my-1">Task based Diet & Fitness plan will be provided</h3>
+                    <p class="text-center text-text italic font-bold md:text-[25px] md:mt-3">(Meals, Food Timing, Food Measures, Exercise)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-1 ">
+                    <img src="assests\img\WEBSITE PICS (8).png" class="h-[300px] md:h-[450px] mx-auto w-auto">
+                    <h3 class=" font-semibold text-lg  text-center italic md:text-3xl">Experience the Personalized South Indian based diet with Traditional Touch</h3>
+                    <p class="md:hidden text-center text-text italic font-bold">(Diet based on affordable Daily food & <br>Traditional method )<br></p>
+                    <p class="hidden md:block text-center text-text italic font-bold md:text-[25px]">(Diet based on affordable Daily food & Traditional method )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:mb-5">
+                    <img src="assests\img\WEBSITE PICS (9).png" class="mb-3 h-[350px] w-auto md:h-[445px] mx-auto md:mb-0">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic">No more Boring Strict Monotonous<br> Diet pattern!<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic">No more Boring Strict Monotonous Diet pattern!</h3>
+                    <p class="md:hidden text-center italic font-bold text-text mt-2">(Get a New Healthy Diet every week<br> based on Sugar Level)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text  text-[25px]">(Get a New Healthy Diet every week based on Sugar Level)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-2 md:space-y-0">
+                    <img src="assests\img\WEBSITE PICS (10).png" class="h-[350px] w-auto md:h-[445px] mx-auto">
+                    <h3 class="md:hidden font-semibold text-lg text-center italic ">Beat Diabetes through Diabetecure’s<br> 4R Method<br></h3>
+                    <h3 class="hidden md:block font-semibold text-[30px] text-center italic ">Beat Diabetes through Diabetecure’s 4R Method</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Regimen, Replace, Reinforce, Rebirth)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform space-y-3">
+                    <img src="assests\img\WEBSITE PICS (11).png" class="h-[350px] w-auto md:h-[440px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Track your Health Status</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Health Data Graph will be displayed <br>to track your Sugar Level)<br</p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Health Data Graph will be displayed to track your Sugar Level)</p>
+                </div>        
+                <div class="card rounded-lg p-4 transform space-y-3 md:space-y-2">
+                    <img src="assests\img\WEBSITE PICS (12).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:pt-3">We are your Healthy Notification</h3>
+                    <p class="md:hidden text-center italic font-bold text-text">(Rectify your Unhealthy eating pattern<br> as we Notify)<br></p>
+                    <p class="hidden md:block text-center italic font-bold text-text text-[25px]">(Rectify your Unhealthy eating pattern as we Notify)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform md:space-y-3">
+                    <img src="assests\img\WEBSITE PICS (13).png" class="h-[350px] w-auto md:h-[430px] mx-auto md:mb-2">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px]">Learn and Unlearn all about Diabetes through Infotainment</h3>
+                    <p class="text-center italic font-bold text-text md:text-[25px]">(Get to know Tips, Tricks, Do’s & Don’ts of Health through our Infotainment section)</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (14).png" class="h-[350px] w-auto md:h-[450px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">We care for your Mental Health</h3>
+                    <p class="text-center italic font-bold mt-6 text-text md:text-[25px] md:mt-2">(Our Affirmation & Motivation posts will Strengthen you Physically & Mentally )</p>
+                </div>
+                <div class="card rounded-lg p-4 transform">
+                    <img src="assests\img\WEBSITE PICS (15).png" class="h-[350px] w-auto md:h-[430px] mx-auto">
+                    <h3 class="font-semibold text-lg text-center italic md:text-[30px] md:mt-2">Language Options</h3>
+                    <p class="md:hidden text-center italic font-bold mt-6 text-text">Now Diabetecure App is available<br> in both English & Tamil<br></p>
+                    <p class="hidden md:block text-center italic font-bold mt-6 text-text text-[25px]">Now Diabetecure App is available in both English & Tamil</p>
+                </div>
+            </div>
+            
+            <div class="flex justify-between">
+                <button id="prevBtn" class=" text-white  absolute left-7 top-[320px] md:absolute md:left-[220px] md:top-[220px] md:text-5xl md:bg-white md:text-black md:bg-white"> <img src="assests\img\left.png" class="block h-10 md:h-20 "></button>
+                <button id="nextBtn" class=" text-white absolute right-7 top-[320px] md:absolute md:right-[220px] md:top-[220px] md:bg-white"> <img src="assests\img\right.png" alt="" class="block h-10 md:h-20"></button>
+                
+            </div>
+        </section>
+        
+        
+
+        <div class="md:hidden flex flex-col mb-6 ">
+            <button  id="infoButton4" class="trigger-popup mx-auto bg-button text-white text-lg font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300 ">Get your Diet plan now</button>
+        </div>
+        <!--Desktop view button-->
+        <button id="infoButton3Desk" class="trigger-popup hidden md:block mx-auto mt-5 bg-button text-white text-3xl font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300">
+            Get your Diet plan now
+        </button>
+        <!--Journey-->
+        <!--Phone view-->
+        <section class="flex flex-col bg-white space-y-4 md:hidden ">
+            <h2 class="font-bold text-3xl text-gray-800 text-center">The Diabetecure Journey</h2>
+            
+            <img src="assests\img\2 (1).png" class="trigger-popup h-[190px] w-[300px] mx-auto">
+            <img id="trigger-popup" src="assests\img\3 (2).png" class="trigger-popup h-[190px] w-[300px] mx-auto">
+            <img id="trigger-popup" src="assests\img\4 (1).png" class="trigger-popup h-[190px] w-[300px] mx-auto">
+            <button id="trigger-popup" class="trigger-popup mx-auto bg-button text-white text-lg font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300 ">Get your Diet plan now</button>
+            
+        </section>
+        <!--Desktop view-->
+        <h1 class="hidden md:block text-center font-bold text-5xl my-20"> The Diabetecure Journey</h1>
+        <section class="hidden md:grid grid-cols-3 gap-10 px-40">
+            <a class="trigger-popup">
+                <img class="trigger-popup" src="assests\img\2 (1).png" class="h-64">
+            </a>
+            <a class="trigger-popup">
+                <img id="trigger-popup" src="assests\img\3 (2).png" class="h-64 ">
+            </a>
+            <a class="trigger-popup">
+                <img id="trigger-popup" src="assests\img\4 (1).png" class="h-64">
+            </a>
+            
+            
+        </section>
+        <button id="" class="trigger-popup hidden md:block mx-auto mt-[60px] bg-button text-white text-3xl font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300">
+            Get your Diet plan now
+        </button>
+        <div class=" md:my-20 "></div>
+
+        <!--FAQ-->
+        <!--phone view-->
+        <div class="md:hidden relative w-full h-[600px] overflow-hidden py-6">
+            <div id="slider1" class="flex justify-between transition-transform duration-300 ease-in-out">
+                <img src="assests\img\14.png" alt="FAQ Questions" class="  object-cover">
+                <img src="assests\img\15.png" alt="FAQ Answers" class=" object-cover">
+            </div>
+            <div class="flex justify-center space-x-4">
+                <button id="prevBtn1" class="text-white  absolute left-7 top-[320px] md:absolute md:left-[220px] md:top-[220px] md:text-5xl md:bg-white md:text-black md:bg-white">
+                    <img src="assests\img\left.png" class="block h-10 md:h-20 ">
+                </button>
+                <button id="nextBtn1" class="text-white absolute right-7 top-[320px] md:absolute md:right-[220px] md:top-[220px] md:bg-white">
+                    <img src="assests\img\right.png" alt="" class="block h-10 md:h-20">
+                </button>
+            </div>
+            <button id="trigger-popup" class="trigger-popup absolute bottom-10 left-[25%] mx-auto bg-button text-white text-lg font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300 ">Get your Diet plan now</button>
+            
+        </div>
+        <!--Desktop-->
+        <section class="hidden md:flex justify-center relative mb-7">
+            <img src="assests\img\Pop Up Website.png" >
+            <button id="" class="trigger-popup absolute bottom-10 left-[37%] hidden md:block mx-auto mt-[60px] bg-button text-white text-3xl font-bold px-6 py-2 rounded-md shadow-lg hover:shadow-xl transition duration-300">
+                Get your Diet plan now
+            </button>
+        </section>
+        
+
+
+        <div id="popup" class="fixed inset-0 bg-[#009846] bg-opacity-70 md:bg-black md:bg-opacity-70 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg p-8 max-w-md w-50 md:w-[800px] shadow-2xl md:shadow-none">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-[25px] text-center font-bold">TELL US ABOUT YOURSELF!</h2>
+                    <button id="closeButton" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div id="progressContainer" class="mb-4 flex space-x-1"></div>
+                <h3 id="question" class="text-xl font-semibold mb-4"></h3>
+                <div id="options" class="space-y-2 text-xl"></div>
+                <p id="indicator" class="text-sm text-gray-500 mb-4"></p>
+                <div class="mt-6 flex justify-between">
+                    <button id="previousButton" class="bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded cursor-not-allowed" disabled>
+                        Previous
+                    </button>
+                    <button id="nextButton" class="bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded cursor-not-allowed" disabled>
+                        Next
+                    </button>
+                </div>
+                <h3 id="error" class="text-red-700 hidden">*Enter a 10 digit phone number</h3>
+            </div>
+        </div>
+        
+        
+        
+        
+        <!--social media-->
+        <div class="flex flex-row  pb-10 md:mx-auto md:justify-center">
+            <div onclick="redirectToUtube()" class="mt-10 md:mt-[38px]">
+                <img src="assests\img\mobileFinal utube.png" class="md:hidden ">
+                <img src="assests\img\final utube 1.png" class="hidden md:block h-[465px]">
+            </div>
+            <div onclick="redirectToFace()">
+                <img src="assests\img\Pop Up MOBILE VIEW DIABETECURE (4).png" class="md:hidden">
+                <img src="assests\img\final facebook 1.png" class="hidden md:block h-[500px]">
+            </div>
+            <div onclick="redirectToInsta()" target="_blank" class="mt-10 md:mt-12">
+                <img  src="assests\img\mobileFinal insta.png" class="md:hidden">
+                <img src="assests\img\instagram final 2.png" class="hidden md:block h-[450px]">
+            </div>
+        </div>
+        <div>
+            <h1 class=" justify-center mx-auto text-center font-bold text-xl md:text-2xl mb-20 px-7 italic text-gray-600 md:text-4xl">Know more about us through our Social Media Platform</h1>
+        </div>
+        
+        <!--Feedbacks-->
+        <!--Desktop view-->
+        <h1 class="font-bold text-2xl text-center md:text-3xl">What people say about the Diabetecure</h1>
+        <div class="hidden md:block relative w-[1000px] mx-auto my-[60px]">
+            <!-- Gallery Wrapper -->
+            <div class="overflow-hidden relative">
+              <div class="flex transition-transform duration-500 ease-in-out" id="slider">
+                <!-- Gallery Items -->
+                <div class="flex-shrink-0 w-1/3">
+                  <img src="assests\img\feedback final (1).png" alt="Image 1" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                  <img src="assests\img\feedback 2 final.png" alt="Image 2" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                  <img src="assests\img\feedback final (3).png" alt="Image 3" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                  <img src="assests\img\feedback final (4).png" alt="Image 4" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                  <img src="assests\img\feedback final (5).png" alt="Image 5" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                  <img src="assests\img\feedback final (6).png" alt="Image 6" class="">
+                </div>
+                <!--2nd -->
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (1).png" alt="Image 1" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback 2 final.png" alt="Image 2" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (3).png" alt="Image 3" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (4).png" alt="Image 4" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (5).png" alt="Image 5" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (6).png" alt="Image 6" class="">
+                </div>
+                <!--3rd-->
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (1).png" alt="Image 1" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback 2 final.png" alt="Image 2" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (3).png" alt="Image 3" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (4).png" alt="Image 4" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (5).png" alt="Image 5" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (6).png" alt="Image 6" class="">
+                </div>
+                <!--4th-->
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (1).png" alt="Image 1" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback 2 final.png" alt="Image 2" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (3).png" alt="Image 3" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (4).png" alt="Image 4" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (5).png" alt="Image 5" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (6).png" alt="Image 6" class="">
+                </div>
+                <!--5th-->
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (1).png" alt="Image 1" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback 2 final.png" alt="Image 2" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (3).png" alt="Image 3" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (4).png" alt="Image 4" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (5).png" alt="Image 5" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (6).png" alt="Image 6" class="">
+                </div>
+                <!--6th-->
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (1).png" alt="Image 1" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback 2 final.png" alt="Image 2" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (3).png" alt="Image 3" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (4).png" alt="Image 4" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (5).png" alt="Image 5" class="">
+                </div>
+                <div class="flex-shrink-0 w-1/3">
+                    <img src="assests\img\feedback final (6).png" alt="Image 6" class="">
+                </div>
+
+              </div>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <button id="prev" class="absolute left-[-10%] top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none">
+              &#10094;
+            </button>
+            <button id="next" class="absolute right-[-10%] top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none">
+              &#10095;
+            </button>
+        </div>
+        <!--Phone View-->
+        <div class="md:hidden relative w-[350px] mx-auto my-20">
+            
+            <!-- Gallery Wrapper -->
+            <div class="overflow-hidden relative">
+                <div class="flex transition-transform duration-500 ease-in-out" id="sliderFeedback">
+                    <!-- Gallery Items -->
+                    <div class="flex-shrink-0 w-full justify-center">
+                        <img src="assests\img\feedback final (1).png" alt="Image 1" class="w-full h-auto">
+                    </div>
+                    <div class="flex-shrink-0 w-full">
+                        <img src="assests\img\feedback 2 final.png" alt="Image 2" class="w-full h-auto">
+                    </div>
+                    <div class="flex-shrink-0 w-full">
+                        <img src="assests\img\feedback final (3).png" alt="Image 3" class="w-full h-auto">
+                    </div>
+                    <div class="flex-shrink-0 w-full">
+                        <img src="assests\img\feedback final (4).png" alt="Image 4" class="w-full h-auto">
+                    </div>
+                    <div class="flex-shrink-0 w-full">
+                        <img src="assests\img\feedback final (5).png" alt="Image 5" class="w-full h-auto">
+                    </div>
+                    <div class="flex-shrink-0 w-full">
+                        <img src="assests\img\feedback final (6).png" alt="Image 6" class="w-full h-auto">
+                    </div>
+                    <!-- Add more images here -->
+                </div>
+            </div>
+           
+            <!-- Navigation Buttons -->
+            <button id="prevFeedback" class="absolute left-[-10%] top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none">
+                &#10094;
+            </button>
+            <button id="nextFeedback" class="absolute right-[-10%] top-1/2 transform -translate-y-1/2 bg-gray-800 bg-opacity-50 text-white p-3 rounded-full focus:outline-none">
+                &#10095;
+            </button>
+        </div>
+    </main>
+
+    <!--mobile view-->
+    <footer class="md:hidden bg-[#374f59] text-white p-8 ">
+        <div class="container">
+           
+            <div class="flex flex-col md:flex-row justify-between ">
+                <!-- Logo and app store buttons -->
+                <div class="mb-6 md:mb-0">
+                    
+                    <div class="flex justify-between gap-2">
+                        <a href="https://play.google.com/store/apps/details?id=live.diabetecure" class="mt-1"><img src="assests\img\29.png" alt="Get it on Google Play"></a>
+                        
+                        <a href="https://apps.apple.com/in/app/diabetecure/id1670809961" class=""><img src="assests\img\30.png" alt="Download on the App Store" ></a>
+                    </div>
+                    <img src="assests\img\Diabetecure Logo (1).png" alt="DiabeteCure Logo" class="h-40 justify-center mx-auto">
+                </div>
+                
+                <!-- Legal links -->
+                <div class="flex flex-col gap-2 text-2xl mb-10 md:mb-0">
+                    <h3 class="font-bold ">Legal</h3>
+                    <ul class="flex flex-col gap-2">
+                        <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:underline">Terms of Service</a></li>
+                        <li><a href="#" class="hover:underline">Return Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social media icons -->
+                <div class="flex space-x-6 mb-6 md:mb-0 ">
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/diabetecure?igsh=MWFldDA3OWRwNjNibw%3D%3D&utm_source=qr" class="text-white hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/people/Diabetecure-Healthcare/100094080991679/?mibextid=LQQJ4d" class="text-white hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <!-- YouTube -->
+                    <a href="https://www.youtube.com/@diabetecure" class="text-white hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                    </a>
+                    <!-- WhatsApp -->
+                    <a href="https://wa.me/message/DJWZOFPRPFSPK1" class="text-white hover:text-gray-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Copyright and address -->
+            <div class="flex flex-col gap-5">
+                <p class="text-2xl">Registered Copyright 2024</p>
+                
+                    <p class=" text-[18px]">Registered Office: <br><a class="">Abraham Healthcare</a><br>
+                        GSTN: 33KGBPS2108Q1ZZ<br><br>
+                        No.46, Kumaran Shirish Building,,<br>
+                        Melamadai Main Rd, Madurai 625020<br>
+                        Tamil Nadu, India</p>
+            </div>
+        
+        </div>
+        
+    </footer>
+
+    <!--desktop-->
+    <footer class="hidden md:block bg-[#374f59] text-white  h-[450px] md:px-20 md:py-5">
+        <div class="container mx-auto mt-10">
+            <div class="flex flex-col md:flex-row justify-between ">
+                <!-- Legal links -->
+                <div class="pt-[50px] mb-6 md:mb-0">
+                    <h3 class="font-bold text-[30px] mb-4">Legal</h3>
+                    <ul class="space-y-0 text-[25px]">
+                        <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:underline">Terms of Service</a></li>
+                        <li><a href="#" class="hover:underline">Return Policy</a></li>
+                    </ul>
+                    <!-- Social media icons -->
+                    <div class="flex space-x-6 mt-[60px]">
+                        <a href="https://www.instagram.com/diabetecure?igsh=MWFldDA3OWRwNjNibw%3D%3D&utm_source=qr" class="text-white hover:text-gray-300">
+                            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/people/Diabetecure-Healthcare/100094080991679/?mibextid=LQQJ4d" class="text-white hover:text-gray-300">
+                            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.youtube.com/@diabetecure" class="text-white hover:text-gray-300">
+                            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/message/DJWZOFPRPFSPK1" class="text-white hover:text-gray-300">
+                            <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+    
+                <!-- Center content -->
+                <div class="mb-6 md:mb-0 text-[18px]">
+                    <div class="flex gap-3 mb-4">
+                        <a href="https://play.google.com/store/apps/details?id=live.diabetecure" class=""><img src="assests\img\29.png" alt="Get it on Google Play" class="h-20 mt-[4px] "></a>
+                        <a href="https://apps.apple.com/in/app/diabetecure/id1670809961" class=""><img src="assests\img\30.png" alt="Download on the App Store" class="h-20 ml-5"></a>
+                    </div>
+                    <p class="text-[30px] ">Registered Copyright 2024</p>
+                    <p class="mt-2">Registered Office: <br><a class="\">Abraham Healthcare</a><br>
+                        GSTN: 33KGBPS2108Q1ZZ<br><br>
+                        No.46, Kumaran Shirish Building,<br>
+                        Melamadai Main Rd, Madurai 625020<br>
+                        Tamil Nadu, India</p>
+                </div>
+    
+                <!-- Logo -->
+                <div class="mb-6 md:mb-0">
+                    <img src="assests\img\Diabetecure Logo (1).png" alt="DiabeteCure Logo" class="h-40">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="hidden md:flex flex-wrap justify-between bg-white gap-1 md:gap-64 my-10 px-[110px]">
+        <div class="flex flex-row ">
+            <img src="assests\img\23.png" class="h-[60px] my-auto">
+            <h1 class="justify-center my-auto font-bold text-[15px] italic">95% <br>Saw Results*</h1>
+        </div>
+        <div class="flex flex-row">
+            <img src="assests\img\24.png" class="h-[60px] my-auto">
+            <h1 class="justify-center my-auto font-bold text-[15px] italic">Approved method<br> to Beat Diabetes<br></h1>
+        </div>
+        <div class="flex flex-row">
+            <img src="assests\img\25.png" class="h-[60px] my-auto">
+            <h1 class="justify-center my-auto font-bold text-[15px] italic">High Customer<br> Satisfaction<br></h1>
+        </div>
+    </div>
+    <div class="md:hidden">
+        <div class="grid grid-cols-2">
+            <img src="assests\img\footer 1 (1).png">
+            <img src="assests\img\footer 1 (2).png">
+        </div>
+        <img src="assests\img\footer 1 (3).png" class="size-[55%] mx-auto">
+        
+    </div>
+</body>
+    <script>
+        //social media redirect 
+        function redirectToInsta() {
+        window.open("https://www.instagram.com/diabetecure?igsh=MWFldDA3OWRwNjNibw%3D%3D&utm_source=qr","_blank") 
+        }
+        function redirectToFace() {
+        window.open("https://www.facebook.com/profile.php?id=100094080991679&mibextid=LQQJ4d","_blank") 
+        }
+        function redirectToUtube() {
+        window.open("https://youtube.com/@diabetecure?si=vulzhDtcPomr4pcm","_blank") 
+        }
+        
+        const cardStack = document.querySelector('.card-stack');
+        const cards = document.querySelectorAll('.card');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+
+
+        function updateCardPositions() {
+            cards.forEach((card, index) => {
+                const offset = index - currentIndex;
+                card.style.transform = `
+                    translateX(${offset * 100}%)
+                    translateZ(${-Math.abs(offset) * 50}px)
+                    rotateY(${offset * 5}deg)
+                    scale(${1 - Math.abs(offset) * 0.1})
+                `;
+                card.style.opacity = 1 - Math.abs(offset) * 0.3;
+                card.style.zIndex = cards.length - Math.abs(offset);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCardPositions();
+            }
+            else{
+                currentIndex = cards.length - 1;
+                updateCardPositions();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                updateCardPositions();
+            }
+            else{
+                currentIndex = 0;
+                updateCardPositions();
+            }
+        });
+
+        let startX;
+        let isSwiping = false;
+
+        cardStack.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isSwiping = true;
+        });
+
+        cardStack.addEventListener('touchmove', (e) => {
+            if (!isSwiping) return;
+            const currentX = e.touches[0].clientX;
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex < cards.length - 1) {
+                    currentIndex++;
+                } else if (diff < 0 && currentIndex > 0) {
+                    currentIndex--;
+                }
+                updateCardPositions();
+                isSwiping = false;
+            }
+        });
+
+        cardStack.addEventListener('touchend', () => {
+            isSwiping = false;
+        });
+
+        updateCardPositions();
+        
+    </script>
+    <script>
+        const questions = [
+            {
+                question: "How long have you had Diabetes?",
+                options: ["More than 5 years", "1 to 5 years", "Less than 1 year"]
+            },
+            {
+                question: "Update your current sugar level?",
+                options: ["140 - 199 mg/dL", "200 - 299 mg/dL", "300 - 399 mg/dL", "400 mg/dL & above"]
+            },
+            {
+                question: "Update your HbA1C level?",
+                options: ["Less than 6%", "6% to 7%", "7% to 8%", "9% & above"]
+            },
+            {
+                question: "What is your Lifestyle Status?",
+                options: [ "Active (You spend most of your day doing something physical)", "Moderate (You spend a large part of your day on your feet)","Sedentary ( You spend most of your day sitting)"]
+            },
+            {
+                question: "Choose your Food Preference for your Diet",
+                options: ["Vegetarian + Egg", "Non Vegetarian", "Vegetarian"]
+            },
+            {
+                question: "Are you under any medication?",
+                options: ["Yes", "No"]
+            },
+            {
+                question: "Please provide your details",
+                options: [],
+                isInput: true
+            }
+        ];
+    
+        let currentQuestion = 0;
+        let selectedOptions = {};
+        let formData = {
+            Name: '',
+            Age: '',
+            Mobile: '',
+            Email: ''
+        };
+
+        const textElem =document.getElementById('textElem');
+        const popup = document.getElementById('popup');
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const nextButton = document.getElementById('nextButton');
+        const previousButton = document.getElementById('previousButton');
+        const progressContainer = document.getElementById('progressContainer');
+        const indicator = document.getElementById('indicator');
+        const errormsg=document.getElementById('error');
+    
+        function createProgressBar() {
+            progressContainer.innerHTML = '';
+            for (let i = 0; i < questions.length; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'h-2 flex-1 bg-gray-300 rounded-full';
+                progressContainer.appendChild(bar);
+            }
+        }
+    
+        function updateProgressBar() {
+            const progressBars = progressContainer.querySelectorAll('div');
+            progressBars.forEach((bar, index) => {
+                if (index <= currentQuestion) {
+                    bar.classList.remove('bg-gray-300');
+                    bar.classList.add('bg-checked');
+                } else {
+                    bar.classList.remove('bg-checked');
+                    bar.classList.add('bg-gray-300');
+                }
+            });
+        }
+    
+        function updateIndicator() {
+            if (currentQuestion === questions.length - 1) {
+                indicator.textContent = "You're almost there!";
+            } else {
+                const remainingQuestions = questions.length - currentQuestion - 1;
+                indicator.textContent = `${remainingQuestions} question${remainingQuestions !== 1 ? 's' : ''} remaining`;
+            }
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            questionElement.textContent = q.question;
+            optionsElement.innerHTML = '';
+           
+
+            // Reset button states
+            nextButton.disabled = true;
+            nextButton.classList.remove('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+            nextButton.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+
+            previousButton.disabled = currentQuestion === 0;
+            if (previousButton.disabled) {
+                previousButton.classList.remove('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                previousButton.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+            } else {
+                previousButton.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                previousButton.classList.add('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+            }
+
+            if (q.isInput) {
+                const fields = ['Name', 'Age', 'Mobile', 'Email'];
+                fields.forEach(field => {
+                    const label = document.createElement('label');
+                    label.textContent = field;
+                    label.className = 'block text-gray-700 text-sm font-bold mb-2';
+                    
+                    const input = document.createElement('input');
+                    input.type = field === 'Age' || field === 'Mobile' ? 'number' : 'text'; // Set type to number for Age and Mobile
+                    input.inputMode = field === 'Age' || field === 'Mobile' ? 'numeric' : 'text';
+                    if (field === 'Age') {
+                        input.min = '0'; // Minimum value for age
+                        input.max = '120'; // Maximum value for age
+                    }
+                    input.value = formData[field] || '';
+                    input.className = 'form-input mt-1 block w-full border border-gray-300 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-checked';
+                    input.placeholder = `Enter your ${field.toLowerCase()}`;
+                    
+                    input.oninput = () => {
+                        formData[field] = input.value;
+                        
+                        checkIfAllFieldsFilled(); // Check if all fields have data
+                    };
+                    
+                    optionsElement.appendChild(label);
+                    optionsElement.appendChild(input);
+                });
+            } else {
+                q.options.forEach((option, index) => {
+                    const label = document.createElement('label');
+                    label.className = 'flex items-center space-x-2 p-2 rounded bg-gray-100 hover:bg-gray-200 cursor-pointer';
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'option';
+                    radio.value = option;
+                    radio.className = 'form-radio h-5 w-5 text-checked';
+                    radio.checked = selectedOptions[currentQuestion] === option;
+
+                    // Enable Next button if an option is selected
+                    radio.addEventListener('change', () => {
+                        selectedOptions[currentQuestion] = option;
+                        highlightSelectedOption(label);
+                        nextButton.disabled = false;
+                        nextButton.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                        nextButton.classList.add('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                    });
+                    
+                    const span = document.createElement('span');
+                    // Split option text into bold and normal parts
+                    const parts = option.match(/^(\w+)\s?\((.*)\)$/);
+                    if (parts) {
+                        const boldText = document.createElement('strong');
+                        boldText.textContent = parts[1];
+                        const normalText = document.createElement('span');
+                        normalText.textContent = ` (${parts[2]})`;
+                        normalText.className = 'option-small';
+                        span.appendChild(boldText);
+                        span.appendChild(normalText);
+                    } else {
+                        span.textContent = option;
+                    }
+                    
+                    label.appendChild(radio);
+                    label.appendChild(span);
+                    optionsElement.appendChild(label);
+                    
+                    // Highlight previously selected option
+                    if (radio.checked) {
+                        highlightSelectedOption(label);
+                        nextButton.disabled = false;
+                        nextButton.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                        nextButton.classList.add('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                    }
+                });
+            }
+            
+            updateProgressBar();
+            updateIndicator();
+        }
+        function checkIfAllFieldsFilled() {
+            if (currentQuestion === questions.length - 1) {
+                
+                const allFieldsFilled = Object.values(formData).every(value => value.trim() !== '');
+                nextButton.disabled = !allFieldsFilled;
+
+                if (allFieldsFilled) {
+                    nextButton.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    nextButton.classList.add('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                } else {
+                    nextButton.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    nextButton.classList.remove('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                }
+            } else {
+                nextButton.disabled = !selectedOptions.hasOwnProperty(currentQuestion);
+                if (nextButton.disabled) {
+                    nextButton.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    nextButton.classList.remove('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                } else {
+                    nextButton.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                    nextButton.classList.add('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                }
+            }
+        }
+        function highlightSelectedOption(label) {
+            const optionLabels = optionsElement.querySelectorAll('label');
+            optionLabels.forEach(l => l.classList.remove('bg-selected'));
+            label.classList.add('bg-selected');
+        }
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            } else {
+                submitForm();
+            }
+        }
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        }
+
+        function checkIfAllFieldsFilled() {
+            // Check if all fields are filled
+            const allFieldsFilled = Object.values(formData).every(value => value.trim() !== '');
+
+            // Check if the phone number field has exactly 10 digits
+            const phoneNumber = formData['Mobile'] || ''; // Adjust 'phoneNumber' to the actual field name
+            const isPhoneNumberValid = phoneNumber.replace(/\D/g, '').length === 10;
+            if (isPhoneNumberValid){
+                errormsg.classList.remove('hidden')
+            }else{
+                errormsg.classList.add('hidden')
+            }
+            // Determine if the button should be enabled
+            const shouldEnableButton = allFieldsFilled && isPhoneNumberValid;
+
+            nextButton.disabled = !shouldEnableButton;
+
+            if (shouldEnableButton) {
+                nextButton.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                nextButton.classList.add('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                errormsg.classList.add("text-white")
+            } else {
+                nextButton.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                nextButton.classList.remove('bg-checked', 'hover:bg-[#007b36]', 'text-white');
+                errormsg.classList.add("text-red-700")
+            }
+        }
+
+    
+        function submitForm() {
+            console.log('Selected Options:', selectedOptions);
+            console.log('Form Data:', formData);
+            alert('Form submitted! Check the console for the data.');
+            closePopup();
+        }
+
+        function openPopup() {
+            popup.classList.remove('hidden');
+            textElem.classList.add('hidden'); 
+            currentQuestion = 0;
+            selectedOptions = {};
+            formData = {
+                Name: '',
+                Age: '',
+                Mobile: '',
+                Email: ''
+            };
+            showQuestion();
+        }
+    
+        function closePopup() {
+            popup.classList.add('hidden');
+            textElem.classList.remove('hidden'); 
+        }
+    
+        document.getElementById('closeButton').addEventListener('click', closePopup);
+        nextButton.addEventListener('click', nextQuestion);
+        previousButton.addEventListener('click', previousQuestion);
+
+        // Initialize
+        createProgressBar();
+        //openPopup(); // Automatically open the popup for demonstration
+        document.querySelectorAll('.trigger-popup').forEach(button => {
+            button.addEventListener('click', openPopup);
+        });
+    </script>
+    <script>
+         // FAQ slider
+         const faqSlider = document.getElementById('slider1');
+        const faqPrevBtn = document.getElementById('prevBtn1');
+        const faqNextBtn = document.getElementById('nextBtn1');
+        let isFaqShowingQuestions = true;
+
+        function showFaqQuestions() {
+            faqSlider.style.transform = 'translateX(0)';
+            isFaqShowingQuestions = true;
+        }
+
+        function showFaqAnswers() {
+            faqSlider.style.transform = 'translateX(-100%)';
+            isFaqShowingQuestions = false;
+        }
+
+        faqPrevBtn.addEventListener('click', () => {
+            if (!isFaqShowingQuestions) {
+                showFaqQuestions();
+            }
+        });
+
+        faqNextBtn.addEventListener('click', () => {
+            if (isFaqShowingQuestions) {
+                showFaqAnswers();
+            }
+        });
+
+        // Enable touch sliding for FAQ
+        let faqStartX;
+        let isFaqDragging = false;
+
+        faqSlider.addEventListener('touchstart', (e) => {
+            faqStartX = e.touches[0].clientX;
+            isFaqDragging = true;
+        });
+
+        faqSlider.addEventListener('touchmove', (e) => {
+            if (!isFaqDragging) return;
+            const currentX = e.touches[0].clientX;
+            const diff = faqStartX - currentX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && isFaqShowingQuestions) {
+                    showFaqAnswers();
+                } else if (diff < 0 && !isFaqShowingQuestions) {
+                    showFaqQuestions();
+                }
+                isFaqDragging = false;
+            }
+        });
+
+        faqSlider.addEventListener('touchend', () => {
+            isFaqDragging = false;
+        });
+    </script>
+    <script>
+        const slider = document.getElementById('slider');
+        const next = document.getElementById('next');
+        const prev = document.getElementById('prev');
+
+        const slideCount = 3; // Number of images to display at once
+        const imageWidth = 100 / slideCount; // Each image takes up 33.333% of the slider width
+        let currentIndex2 = 0;
+
+        next.addEventListener('click', () => {
+        const totalImages = slider.children.length;
+        if (currentIndex2 < totalImages / slideCount - 1) {
+            currentIndex2++;
+            slider.style.transform = `translateX(-${currentIndex2 * 100}%)`;
+        }
+        else{
+            currentIndex2=0;
+            slider.style.transform = `translateX(-${currentIndex2 * 100}%)`;
+        }
+        });
+
+        prev.addEventListener('click', () => {
+        if (currentIndex2 > 0) {
+            currentIndex2--;
+            slider.style.transform = `translateX(-${currentIndex2 * 100}%)`;
+        }
+        else{
+            currentIndex2=slider.children.length/slideCount - 1;
+            slider.style.transform = `translateX(-${currentIndex2 * 100}%)`;
+        }
+        });
+            
+    </script>
+    <script>
+        const sliderFeedback = document.getElementById('sliderFeedback');
+        const nextFeedback = document.getElementById('nextFeedback');
+        const prevFeedback = document.getElementById('prevFeedback');
+
+        let currentIndexFeedback = 0;
+        let startXFeedback = 0;
+        let endX = 0;
+
+        nextFeedback.addEventListener('click', () => {
+            currentIndexFeedback = (currentIndexFeedback + 1) % sliderFeedback.children.length;
+            sliderFeedback.style.transform = `translateX(-${currentIndexFeedback * 100}%)`;
+        });
+
+        prevFeedback.addEventListener('click', () => {
+            currentIndexFeedback = (currentIndexFeedback - 1 + sliderFeedback.children.length) % sliderFeedback.children.length;
+            sliderFeedback.style.transform = `translateX(-${currentIndexFeedback * 100}%)`;
+        });
+
+        // Touch event handlers for swipe gestures
+        sliderFeedback.addEventListener('touchstart', (e) => {
+            startXFeedback = e.touches[0].clientX;
+        });
+
+        sliderFeedback.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+        });
+
+        sliderFeedback.addEventListener('touchend', () => {
+            if (startXFeedback > endX + 50) {
+                currentIndexFeedback = (currentIndexFeedback + 1) % sliderFeedback.children.length;
+            } else if (startXFeedback < endX - 50) {
+                currentIndexFeedback = (currentIndexFeedback - 1 + sliderFeedback.children.length) % sliderFeedback.children.length;
+            }
+            sliderFeedback.style.transform = `translateX(-${currentIndexFeedback * 100}%)`;
+        });
+    </script>
+
+</html>
